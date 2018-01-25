@@ -3,6 +3,10 @@ sudo: required
 services:
   - docker
 
+before_script:
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
 before_install:
+  - /usr/local/heroku/bin/heroku restart --app code-gk
   - docker build -t genkit/code-gk .
   - docker images -a
