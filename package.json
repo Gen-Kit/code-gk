@@ -9,5 +9,8 @@
     "exports": "*"
   },
   "author": "Osman Ali",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  }
 }
