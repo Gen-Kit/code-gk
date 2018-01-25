@@ -7,7 +7,5 @@ services:
 
 before_install:
   - heroku container:login
-  - docker build -t genkit/code-gk .
-  - docker images -a
   - heroku container:push web -a code-gk
   - heroku restart -a code-gk
