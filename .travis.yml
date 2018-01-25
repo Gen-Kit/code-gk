@@ -5,4 +5,4 @@ services:
 
 before_install:
   - docker build -t genkit/code-gk .
-  - docker install -a
+  - docker images -a
