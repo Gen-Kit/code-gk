@@ -1,10 +1,13 @@
 sudo: required
 
+language: generic
+
 services:
   - docker
 
 before_install:
   - heroku restart --app code-gk
-  - heroku
+  - heroku container:login
   - docker build -t genkit/code-gk .
   - docker images -a
+  - heroku container:push web
