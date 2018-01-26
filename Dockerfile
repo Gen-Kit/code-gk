@@ -1,15 +1,11 @@
 #Grab the latest alpine image
-#FROM node:alpine
+FROM node:alpine
 
-FROM danielguerra/alpine-docker
-
-#RUN apk update
-#RUN apk add openrc
-#RUN apk add sudo
-#RUN apk add docker
-#RUN rc-update add docker boot
-#RUN sudo service docker start
-RUN docker images
+RUN apk update
+RUN apk add openrc
+RUN apk add docker
+RUN rc-update add docker boot
+RUN docker build -t 'virtual_machine' - < df
 
 # Create app directory
 WORKDIR /usr/src/app
