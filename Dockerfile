@@ -5,8 +5,7 @@ RUN apk update
 RUN apk add openrc
 RUN apk add docker
 RUN rc-update add docker boot
-RUN service docker start
-RUN docker ps
+RUN docker images
 
 # Create app directory
 WORKDIR /usr/src/app
