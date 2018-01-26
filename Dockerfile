@@ -3,8 +3,10 @@ FROM node:alpine
 
 RUN apk update
 RUN apk add openrc
+RUN apk add sudo
 RUN apk add docker
 RUN rc-update add docker boot
+RUN sudo service docker start
 RUN docker images
 
 # Create app directory
