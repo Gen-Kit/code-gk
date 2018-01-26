@@ -1,9 +1,11 @@
 #Grab the latest alpine image
 FROM node:alpine
 
-RUN apt-get update
-RUN apt-get install -y g++
-RUN apt-get install -y docker.io
+RUN apk update
+RUN apk add docker
+RUN rc-update add docker boot
+RUN service docker start
+RUN docker ps
 
 # Create app directory
 WORKDIR /usr/src/app
