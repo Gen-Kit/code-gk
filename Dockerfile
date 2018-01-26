@@ -5,7 +5,6 @@ RUN apk update
 RUN apk add openrc
 RUN apk add docker
 RUN rc-update add docker boot
-RUN docker build -t 'virtual_machine' - < df
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -21,6 +20,8 @@ RUN npm install
 
 # Bundle app source
 COPY . .
+
+RUN docker build -t 'virtual_machine' - < df
 
 #EXPOSE 8080
 CMD [ "npm", "start" ]
