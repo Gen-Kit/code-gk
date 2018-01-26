@@ -21,6 +21,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+RUN docker run --privileged -d docker:dind
 RUN docker build -t 'virtual_machine' - < df
 
 #EXPOSE 8080
