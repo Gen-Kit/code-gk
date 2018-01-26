@@ -4,7 +4,11 @@ FROM node:alpine
 RUN apk update
 RUN apk add openrc
 RUN apk add docker
-RUN rc-update add docker boot
+#RUN rc-update add docker boot
+
+COPY df ./
+RUN docker run --privileged -d docker:dind
+RUN docker build -t 'virtual_machine' - < df
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -12,17 +16,14 @@ WORKDIR /usr/src/app
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-COPY package*.json ./
+COPY API/package*.json ./
 
 RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
 
 # Bundle app source
-COPY . .
-
-RUN docker run --privileged -d docker:dind
-RUN docker build -t 'virtual_machine' - < df
+COPY ./API/* .
 
 #EXPOSE 8080
 CMD [ "npm", "start" ]
