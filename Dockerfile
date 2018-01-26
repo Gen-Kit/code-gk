@@ -1,30 +1,32 @@
 #Grab the latest alpine image
-FROM node:alpine
+FROM ubuntu:14.04
 
-RUN apk update
-RUN apk add openrc
-RUN apk add docker
-#RUN rc-update add docker boot
-RUN service docker start
+###########################
+# Docker SETUP
+###########################
+RUN apt-get update
+RUN apt-get install -y docker.io
+RUN ln -sf /usr/bin/docker.io /usr/local/bin/docker
+RUN sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker.io
 
-COPY df ./
-RUN docker run --privileged -d docker:dind
-RUN docker build -t 'virtual_machine' - < df
+RUN echo "Docker Setup complete"
 
-# Create app directory
-WORKDIR /usr/src/app
+###########################
+# NodeJS setup
+###########################
+RUN apt-get update
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm
+RUN echo "NodeJS setup Complete"
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY API/package*.json ./
+###########################
+# Start Docker
+###########################
+#RUN chmod 777 ../API/DockerTimeout.sh
+#RUN chmod 777 ../API/Payload/script.sh
+#RUN chmod 777 ../API/Payload/javaRunner.sh
+#RUN chmod 777 UpdateDocker.sh
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
-# Bundle app source
-COPY ./API/* .
-
-#EXPOSE 8080
-CMD [ "npm", "start" ]
+RUN service docker.io restart
+RUN docker images
+#RUN ./UpdateDocker.sh
